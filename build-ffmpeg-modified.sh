@@ -11,12 +11,19 @@ THIN=`pwd`/"thin"
 # absolute path to x264 library
 #X264=`pwd`/fat-x264
 
-#FDK_AAC=`pwd`/fdk-aac/fdk-aac-ios
+FDK_AAC=`pwd`/fdk-aac-ios
 
-CONFIGURE_FLAGS="--enable-cross-compile --disable-debug --disable-programs --disable-doc \
-				 --disable-avdevice --enable-avformat \
-				 --disable-avfilter  --disable-swresample --disable-swscale \
+CONFIGURE_FLAGS="--enable-cross-compile \
+				 --disable-debug \
+				 --disable-programs \
+				 --disable-doc \
+				 --disable-avdevice \
+				 --disable-avfilter \
+				 --disable-swscale \
 				 --disable-everything \
+				 --enable-nonfree \
+				 --enable-avformat \
+				 --enable-swresample \
 				 --enable-decoder=h264 \
 				 --enable-demuxer=h264 \
 				 --enable-parser=h264 \
@@ -42,7 +49,7 @@ fi
 # avresample
 #CONFIGURE_FLAGS="$CONFIGURE_FLAGS --enable-avresample"
 
-ARCHS="arm64 armv7 x86_64 i386"
+ARCHS="armv7 arm64 x86_64 i386"
 
 COMPILE="y"
 LIPO="y"
@@ -109,7 +116,7 @@ then
 		    CFLAGS="$CFLAGS -mios-simulator-version-min=$DEPLOYMENT_TARGET"
 		else
 		    PLATFORM="iPhoneOS"
-		    CFLAGS="$CFLAGS -mios-version-min=$DEPLOYMENT_TARGET -fembed-bitcode"
+		    CFLAGS="$CFLAGS -mios-version-min=$DEPLOYMENT_TARGET"
 		    if [ "$ARCH" = "arm64" ]
 		    then
 		        EXPORT="GASPP_FIX_XCODE5=1"
@@ -130,6 +137,9 @@ then
 			CFLAGS="$CFLAGS -I$FDK_AAC/include"
 			LDFLAGS="$LDFLAGS -L$FDK_AAC/lib"
 		fi
+		
+		echo "** CFLAGS=${CFLAGS}"
+		echo "** LDFLAGS=${LDFLAGS}"
 
 		TMPDIR=${TMPDIR/%\/} $CWD/$SOURCE/configure \
 		    --target-os=darwin \
