@@ -45,17 +45,11 @@ then
 		if [ "$ARCH" = "i386" -o "$ARCH" = "x86_64" ]
 		then
 		    PLATFORM="iPhoneSimulator"
-		    CPU=
-		    if [ "$ARCH" = "x86_64" ]
-		    then
-		    	CFLAGS="$CFLAGS -mios-simulator-version-min=7.0"
-		    	HOST=
-		    else
-		    	CFLAGS="$CFLAGS -mios-simulator-version-min=7.0"
+			CFLAGS="$CFLAGS -mios-simulator-version-min=7.0"
 			HOST="--host=i386-apple-darwin"
-		    fi
 		else
 		    PLATFORM="iPhoneOS"
+			CFLAGS="$CFLAGS -mios-version-min=7.0"
 		    if [ $ARCH = arm64 ]
 		    then
 		        #CFLAGS="$CFLAGS -D__arm__ -D__ARM_ARCH_7EM__" # hack!
@@ -67,11 +61,11 @@ then
 		fi
 
 		XCRUN_SDK=`echo $PLATFORM | tr '[:upper:]' '[:lower:]'`
-		CC="xcrun -sdk $XCRUN_SDK clang -Wno-error=unused-command-line-argument-hard-error-in-future"
+		CC="xcrun -sdk $XCRUN_SDK clang"
 		AS="$CWD/$SOURCE/extras/gas-preprocessor.pl $CC"
 		CXXFLAGS="$CFLAGS"
 		LDFLAGS="$CFLAGS"
-
+		
 		$CWD/$SOURCE/configure \
 		    $CONFIGURE_FLAGS \
 		    $HOST \
