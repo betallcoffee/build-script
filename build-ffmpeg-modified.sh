@@ -4,9 +4,9 @@
 SOURCE="../pili-ffmpeg"
 FAT="ffmpeg"
 
-SCRATCH="scratch"
+SCRATCH="ffmpeg-scratch"
 # must be an absolute path
-THIN=`pwd`/"thin"
+THIN=`pwd`/"ffmpeg-thin"
 
 # absolute path to x264 library
 #X264=`pwd`/fat-x264
@@ -34,7 +34,6 @@ CONFIGURE_FLAGS="--enable-cross-compile \
 				 --enable-protocol=http \
 				 --enable-protocol=rtmp \
 				 --enable-protocol=hls "
-#				 --enable-hwaccel=h264_videotoolbox"
 
 if [ "$X264" ]
 then
@@ -116,7 +115,7 @@ then
 		    CFLAGS="$CFLAGS -mios-simulator-version-min=$DEPLOYMENT_TARGET"
 		else
 		    PLATFORM="iPhoneOS"
-		    CFLAGS="$CFLAGS -mios-version-min=$DEPLOYMENT_TARGET"
+		    CFLAGS="$CFLAGS -mios-version-min=$DEPLOYMENT_TARGET -fembed-bitcode"
 		    if [ "$ARCH" = "arm64" ]
 		    then
 		        EXPORT="GASPP_FIX_XCODE5=1"

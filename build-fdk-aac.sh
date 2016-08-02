@@ -49,7 +49,7 @@ then
 			HOST="--host=i386-apple-darwin"
 		else
 		    PLATFORM="iPhoneOS"
-			CFLAGS="$CFLAGS -mios-version-min=7.0"
+			CFLAGS="$CFLAGS -mios-version-min=7.0 -fembed-bitcode"
 		    if [ $ARCH = arm64 ]
 		    then
 		        #CFLAGS="$CFLAGS -D__arm__ -D__ARM_ARCH_7EM__" # hack!
