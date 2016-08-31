@@ -1,6 +1,6 @@
-ffmpeg/
-thin/
-scratch/
-fdk-aac-ios/
+pili-ffmpeg/
+ffmpeg-thin/
+ffmpeg-scratch/
+pili-fdk-aac/
 fdk-aac-thin/
 fdk-aac-scratch/

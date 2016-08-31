@@ -1,4 +1,6 @@
 #!/bin/sh
+# source : http:////github.com/mstorsjo/fdk-aac
+# version : 0.1.4
 
 CONFIGURE_FLAGS="--enable-static --with-pic=yes --disable-shared"
 
@@ -6,7 +8,7 @@ ARCHS="arm64 armv7s x86_64 i386 armv7"
 
 # directories
 SOURCE="../fdk-aac"
-FAT="fdk-aac-ios"
+FAT="pili-fdk-aac"
 
 SCRATCH="fdk-aac-scratch"
 # must be an absolute path

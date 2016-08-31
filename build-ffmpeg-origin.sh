@@ -1,39 +1,20 @@
 #!/bin/sh
 
 # directories
-SOURCE="../pili-ffmpeg"
-FAT="ffmpeg"
+SOURCE="../ffmpeg-2.8.6"
+FAT="FFmpeg-iOS"
 
-SCRATCH="ffmpeg-scratch"
+SCRATCH="scratch"
 # must be an absolute path
-THIN=`pwd`/"ffmpeg-thin"
+THIN=`pwd`/"thin"
 
 # absolute path to x264 library
 #X264=`pwd`/fat-x264
 
-FDK_AAC=`pwd`/fdk-aac-ios
+#FDK_AAC=`pwd`/fdk-aac/fdk-aac-ios
 
-CONFIGURE_FLAGS="--enable-cross-compile \
-				 --disable-debug \
-				 --disable-programs \
-				 --disable-doc \
-				 --disable-avdevice \
-				 --disable-avfilter \
-				 --disable-swscale \
-				 --disable-everything \
-				 --enable-nonfree \
-				 --enable-avformat \
-				 --enable-swresample \
-				 --enable-decoder=h264 \
-				 --enable-demuxer=h264 \
-				 --enable-parser=h264 \
-				 --enable-decoder=aac \
-				 --enable-demuxer=aac \
-				 --enable-parser=aac \
-				 --enable-demuxer=flv \
-				 --enable-protocol=http \
-				 --enable-protocol=rtmp \
-				 --enable-protocol=hls "
+CONFIGURE_FLAGS="--enable-cross-compile --disable-debug --disable-programs \
+                 --disable-doc --enable-pic"
 
 if [ "$X264" ]
 then
@@ -48,7 +29,7 @@ fi
 # avresample
 #CONFIGURE_FLAGS="$CONFIGURE_FLAGS --enable-avresample"
 
-ARCHS="armv7 arm64 x86_64 i386"
+ARCHS="arm64 armv7 x86_64 i386"
 
 COMPILE="y"
 LIPO="y"
@@ -136,9 +117,6 @@ then
 			CFLAGS="$CFLAGS -I$FDK_AAC/include"
 			LDFLAGS="$LDFLAGS -L$FDK_AAC/lib"
 		fi
-		
-		echo "** CFLAGS=${CFLAGS}"
-		echo "** LDFLAGS=${LDFLAGS}"
 
 		TMPDIR=${TMPDIR/%\/} $CWD/$SOURCE/configure \
 		    --target-os=darwin \

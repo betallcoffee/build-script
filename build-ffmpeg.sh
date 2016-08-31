@@ -1,20 +1,46 @@
 #!/bin/sh
+# source : http://github.com:pili-engineering/pili-ffmpeg.git
+# version : n3.1-dev-1420-g6f1dd1f
 
 # directories
-SOURCE="../ffmpeg-2.8.6"
-FAT="FFmpeg-iOS"
+SOURCE="../pili-ffmpeg"
+FAT="pili-ffmpeg"
 
-SCRATCH="scratch"
+SCRATCH="ffmpeg-scratch"
 # must be an absolute path
-THIN=`pwd`/"thin"
+THIN=`pwd`/"ffmpeg-thin"
 
 # absolute path to x264 library
 #X264=`pwd`/fat-x264
 
-#FDK_AAC=`pwd`/fdk-aac/fdk-aac-ios
+FDK_AAC=`pwd`/pili-fdk-aac
 
-CONFIGURE_FLAGS="--enable-cross-compile --disable-debug --disable-programs \
-                 --disable-doc --enable-pic"
+CONFIGURE_FLAGS="--enable-cross-compile \
+				 --disable-debug \
+				 --disable-programs \
+				 --disable-doc \
+				 --disable-avdevice \
+				 --disable-avfilter \
+				 --disable-swscale \
+				 --disable-everything \
+				 --enable-nonfree \
+				 --enable-avformat \
+				 --enable-swresample \
+				 --enable-decoder=h264 \
+				 --enable-decoder=aac \
+				 --enable-decoder=mp3* \
+				 --enable-demuxer=h264 \
+				 --enable-demuxer=aac \
+				 --enable-demuxer=flv \
+				 --enable-demuxer=mpegts \
+				 --enable-demuxer=hls \
+				 --enable-demuxer=mp3 \
+				 --enable-demuxer=mov \
+				 --enable-parser=h264 \
+				 --enable-parser=aac \
+				 --enable-protocol=http \
+				 --enable-protocol=rtmp \
+				 --enable-protocol=hls "
 
 if [ "$X264" ]
 then
@@ -29,8 +55,7 @@ fi
 # avresample
 #CONFIGURE_FLAGS="$CONFIGURE_FLAGS --enable-avresample"
 
-ARCHS="arm64 armv7 x86_64 i386"
-
+ARCHS="armv7 armv7s arm64 x86_64 i386"
 COMPILE="y"
 LIPO="y"
 
@@ -117,6 +142,9 @@ then
 			CFLAGS="$CFLAGS -I$FDK_AAC/include"
 			LDFLAGS="$LDFLAGS -L$FDK_AAC/lib"
 		fi
+		
+		echo "** CFLAGS=${CFLAGS}"
+		echo "** LDFLAGS=${LDFLAGS}"
 
 		TMPDIR=${TMPDIR/%\/} $CWD/$SOURCE/configure \
 		    --target-os=darwin \
