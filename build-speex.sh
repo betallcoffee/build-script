@@ -1,18 +1,19 @@
 #!/bin/sh
-# source : http:////github.com/mstorsjo/fdk-aac
-# version : 0.1.4
+# source : http://github.com/xiph/speex
+# version : 1.2rc1
 
 CONFIGURE_FLAGS="--enable-static --with-pic=yes --disable-shared"
 
 ARCHS="arm64 armv7s x86_64 i386 armv7"
 
 # directories
-SOURCE="../fdk-aac"
-FAT="pili-fdk-aac"
+SOURCE="../speex"
+FAT="pili-speex"
+OGG=`pwd`/pili-ogg
 
-SCRATCH="fdk-aac-scratch"
+SCRATCH="speex-scratch"
 # must be an absolute path
-THIN=`pwd`/"fdk-aac-thin"
+THIN=`pwd`/"speex-thin"
 
 COMPILE="y"
 LIPO="y"
@@ -59,16 +60,18 @@ then
                     else
 		        HOST="--host=arm-apple-darwin"
 	            fi
-		    SIMULATOR=
 		fi
+
+		CFLAGS="$CFLAGS -I$OGG/include"
+		LDFLAGS="$LDFLAGS -L$OGG/lib"
 
 		XCRUN_SDK=`echo $PLATFORM | tr '[:upper:]' '[:lower:]'`
 		CC="xcrun -sdk $XCRUN_SDK clang"
 		AS="$CWD/$SOURCE/extras/gas-preprocessor.pl $CC"
-		
+
 		echo "** CFLAGS=${CFLAGS}"
 		echo "** LDFLAGS=${LDFLAGS}"
-
+		
 		$CWD/$SOURCE/configure \
 		    $CONFIGURE_FLAGS \
 		    $HOST \
@@ -82,7 +85,7 @@ then
 			CXXFLAGS="$CFLAGS" \
 		    --prefix="$THIN/$ARCH"
 
-		make -j3 install
+		make -j3 install || exit 1
 		cd $CWD
 	done
 fi

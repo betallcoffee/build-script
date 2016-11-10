@@ -1,18 +1,18 @@
 #!/bin/sh
-# source : http:////github.com/mstorsjo/fdk-aac
-# version : 0.1.4
+# source : http://github.com/xiph/ogg
+# version : 1.3.2
 
 CONFIGURE_FLAGS="--enable-static --with-pic=yes --disable-shared"
 
 ARCHS="arm64 armv7s x86_64 i386 armv7"
 
 # directories
-SOURCE="../fdk-aac"
-FAT="pili-fdk-aac"
+SOURCE="../ogg-1.3.2"
+FAT="pili-ogg"
 
-SCRATCH="fdk-aac-scratch"
+SCRATCH="ogg-scratch"
 # must be an absolute path
-THIN=`pwd`/"fdk-aac-thin"
+THIN=`pwd`/"ogg-thin"
 
 COMPILE="y"
 LIPO="y"
@@ -47,11 +47,11 @@ then
 		if [ "$ARCH" = "i386" -o "$ARCH" = "x86_64" ]
 		then
 		    PLATFORM="iPhoneSimulator"
-			CFLAGS="$CFLAGS -mios-simulator-version-min=6.0"
+			CFLAGS="$CFLAGS -mios-simulator-version-min=7.0"
 			HOST="--host=i386-apple-darwin"
 		else
 		    PLATFORM="iPhoneOS"
-			CFLAGS="$CFLAGS -mios-version-min=6.0 -fembed-bitcode"
+			CFLAGS="$CFLAGS -mios-version-min=7.0 -fembed-bitcode"
 		    if [ $ARCH = arm64 ]
 		    then
 		        #CFLAGS="$CFLAGS -D__arm__ -D__ARM_ARCH_7EM__" # hack!
@@ -59,7 +59,6 @@ then
                     else
 		        HOST="--host=arm-apple-darwin"
 	            fi
-		    SIMULATOR=
 		fi
 
 		XCRUN_SDK=`echo $PLATFORM | tr '[:upper:]' '[:lower:]'`
@@ -68,7 +67,7 @@ then
 		
 		echo "** CFLAGS=${CFLAGS}"
 		echo "** LDFLAGS=${LDFLAGS}"
-
+		
 		$CWD/$SOURCE/configure \
 		    $CONFIGURE_FLAGS \
 		    $HOST \

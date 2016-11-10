@@ -4,3 +4,13 @@ ffmpeg-scratch/
 pili-fdk-aac/
 fdk-aac-thin/
 fdk-aac-scratch/
+pili-libvpx/
+libvpx-thin/
+libvpx-scratch/
+pili-speex/
+speex-thin/
+speex-scratch/
+pili-ogg/
+ogg-thin/
+ogg-scratch/
+
