@@ -41,6 +41,7 @@ CONFIGURE_FLAGS="--enable-cross-compile \
 				 --enable-decoder=mp3* \
 				 --enable-decoder=opus \
 				 --enable-decoder=vorbis \
+				 --enable-decoder=nellymoser \
 				 --enable-decoder=rv20 \
 				 --enable-decoder=rv40 \
 				 --enable-demuxer=h264 \
