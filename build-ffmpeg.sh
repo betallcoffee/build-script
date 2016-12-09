@@ -17,9 +17,9 @@ THIN=`pwd`/"ffmpeg-thin"
 
 #LIB_VPX=`pwd`/pili-libvpx
 
-#SPEEX=`pwd`/pili-speex
+SPEEX=`pwd`/pili-speex
 
-#OPENSSL=`pwd`/pili-openssl
+OPENSSL=`pwd`/pili-openssl
 
 CONFIGURE_FLAGS="--enable-cross-compile \
 				 --disable-debug \
@@ -44,6 +44,7 @@ CONFIGURE_FLAGS="--enable-cross-compile \
 				 --enable-decoder=nellymoser \
 				 --enable-decoder=rv20 \
 				 --enable-decoder=rv40 \
+				 --enable-decoder=cook \
 				 --enable-decoder=srt \
 				 --enable-decoder=ass \
 				 --enable-demuxer=h264 \
@@ -74,7 +75,8 @@ CONFIGURE_FLAGS="--enable-cross-compile \
 				 --enable-protocol=https \
 				 --enable-protocol=rtmp \
 				 --enable-protocol=hls \
-				 --enable-protocol=file "
+				 --enable-protocol=file \
+				 --enable-protocol=cache "
 
 if [ "$X264" ]
 then
@@ -107,7 +109,6 @@ fi
 #CONFIGURE_FLAGS="$CONFIGURE_FLAGS --enable-avresample"
 
 ARCHS="armv7 armv7s arm64 x86_64 i386"
-#ARCHS="x86_64"
 
 COMPILE="y"
 LIPO="y"
